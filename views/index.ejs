@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Country Flag</title>
+
+    <!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+	<script type="text/javascript">
+		function filter(){
+			var region = document.getElementById('region').value;
+			var url = "";
+			if(region!='none'){
+				url = '/?f='+region;
+			}else{
+				url = '/';
+			}
+			window.location = url;
+		}
+		function search(){
+			var name = document.getElementById('name').value;
+			var url = "";
+			if(name!=''){
+				url = '/?s='+name;
+			}else{
+				url = '/';
+			}
+			window.location = url;
+		}
+		function cmode(){
+			var btn = document.getElementById('mode');
+			var body = document.getElementById('body');
+			if(btn.innerHTML == 'Dark Mode'){
+				document.body.style.color = '#FFF';
+				document.body.style.backgroundColor = '#000';
+				btn.innerHTML = 'Light Mode';
+			}else{
+				document.body.style.color = '#000';
+				document.body.style.backgroundColor = '#FFF';
+				btn.innerHTML = 'Dark Mode';
+
+			}
+		}
+	</script>
+
+</head>
+<body id="body">
+	<nav class="navbar navbar-light bg-light border-bottom" style=" background-color: #ffffff;">
+	  <span class="navbar-brand mb-0 h1" style="font-weight: bold;">Where in the world?</span>
+	  <span><button onclick="cmode()" id="mode" class="btn btn-light"><img src="/images/moon.png" alt="" style="width: 15px;"> Dark Mode</button></span>
+	</nav>
+	<div class="container-fluid">
+		<%if(typeof error != 'undefined'){%>
+			<p><%=error%></p>
+			<p>Back to <a href="/">Home Page</a></p>
+		<%}else{%>
+			<form style="display: block; margin: 20px;">
+			  	<div class="form-group" style="display: inline; width: 30%; position: absolute; left: 80px;">
+			    	<input type="text" class="form-control" id="name" placeholder="Search for a country..." onblur="search()">
+			  	</div>
+			  	<div class="form-group" style="display: inline; width: 13%; position: absolute; right: 80px;">
+			    	<select class="form-control" id="region" name="region" onchange="filter()">
+			      		<option value="" disabled selected hidden>Filter by Region</option>
+					  	<option value="none">No Filter</option>
+					  	<option value="Africa">Africa</option>
+					  	<option value="Americas">America</option>
+					  	<option value="Asia">Asia</option>
+					  	<option value="Europe">Europe</option>
+					  	<option value="Oceania">Oceania</option>
+			    	</select>
+			  	</div>
+			</form>
+			<div class="row">
+				<div class="card-deck" style="margin: 50px;">
+					<% var i=0;%>
+					<%while(data[i]){%>
+		  				<div class="col-sm-6 col-md-3" style="margin-bottom: 60px;">
+						  	<a style="text-decoration: none;" href="/display/?name=<%=data[i]['name']%>">
+						  		<div class="card">
+							    <img src="<%=data[i]['flag']%>" class="card-img-top" alt="flag">
+							    <div class="card-body">
+							      	<h5 class="card-title"><%=data[i]['name']%></h5>
+							      	<p class="card-text">Population: <%=data[i]['population']%></p>
+							      	<p class="card-text">Region: <%=data[i]['region']%></p>
+							      	<p class="card-text">Capital: <%=data[i]['capital']%></p>
+							    </div>
+						  		</div>
+						  	</a>
+						  	<%i++;%>
+						</div>
+					<%}%>
+				</div>
+			</div>
+		<%}%>
+	</div>
+</body>

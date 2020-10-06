@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Country Flag</title>
+
+    <!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light border-bottom" style=" background-color: #ffffff;">
+	  <span class="navbar-brand mb-0 h1" style="font-weight: bold;">Where in the world?</span>
+	  <span><button onclick="cmode()" id="mode" class="btn btn-light"><img src="/images/moon.png" alt="" style="width: 15px;"> Dark Mode</button></span>
+	</nav>
+	<div class="container-fluid">
+		<%if(typeof error != 'undefined'){%>
+			<p><%=error%></p>
+			<p>Back to <a href="/">Home Page</a></p>
+		<%}else{%>
+			<a href="/" style="display: block; "><button class="btn btn-light" style="border: 1px solid black;margin: 20px;margin-left: 0px;"> ← Back </button></a>
+			<%console.log(data);%>
+			<div class="row">
+				<img class="col-sm-12 col-md-6" style="max-width: 570px; display: inline;" src="<%=data['flag']%>" alt="flag">
+				<div class="col-sm-12 col-md-6">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="card-title" style="font-weight: bold;"><br/><%=data['name']%></h3>
+						</div>
+					</div>
+					<div class="row">
+						<div style="" class="col-md-6 col-sm-12">
+							<p class="card-text"><span  style="font-weight: bold;" >Native Name: </span><%=data['nativeName']%></p>
+							<p class="card-text"><span  style="font-weight: bold;" >Region: </span><%=data['region']%></p>
+							<p class="card-text"><span  style="font-weight: bold;" >Sub Region: </span><%=data['subregion']%></p>
+							<p class="card-text"><span  style="font-weight: bold;" >Population: </span><%=data['population']%></p>
+							<p class="card-text"><span  style="font-weight: bold;" >Capital: </span><%=data['capital']%></p>
+						</div>
+						<div style="" class="col-md-6 col-sm-12">
+							<p class="card-text"><span  style="font-weight: bold;"><br/>Top Level Domain: </span>
+								<%var i=0%>
+								<%while(typeof data['topLevelDomain'][i] != 'undefined'){%>
+									<%=data['topLevelDomain'][i]%>
+									<%if(typeof data['topLevelDomain'][`${i+1}`] != 'undefined'){%>
+										<%=', '%>
+									<%}%>
+								<%i++;}%>
+							</p>
+							<p class="card-text"><span  style="font-weight: bold;">Currencies:</span> 
+								<%var i=0;%>
+								<%while(typeof data['currencies'][`${i}`] != 'undefined'){%>
+									<%=data['currencies'][0]['name']%>
+									<%if(typeof data['currencies'][`${i+1}`] != 'undefined'){%>
+										<%=', '%>
+									<%}%>
+								<%i++;}%>
+							</p>
+							<p class="card-text"><span  style="font-weight: bold;">Languages: </span>
+								<%var i=0;%>
+								<%while(typeof data['languages'][`${i}`] != 'undefined'){%>
+									<%=data['languages'][`${i}`]['name']%>
+									<%if(typeof data['languages'][`${i+1}`] != 'undefined'){%>
+										<%=', '%>
+									<%}%>
+								<%i++;}%>
+							</p><br/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<p class="card-text"><span  style="font-weight: bold;">Border Countries:</span> 
+								<%var i=0;%>
+								<%while(typeof list[`${i}`] != 'undefined'){%>
+									<a href="/display/?name=<%=list[`${i}`]%>">
+										<button  class="btn btn-light" style="border: 1px solid gray;"><%=list[`${i}`]%></button>
+									</a>
+								<%i++;}%>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		<%}%>
+	</div>
+</body>
