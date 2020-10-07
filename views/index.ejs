@@ -37,54 +37,113 @@
 			window.location = url;
 		}
 		function cmode(){
-			var btn = document.getElementById('mode');
-			var body = document.getElementById('body');
-			if(btn.innerHTML == 'Dark Mode'){
-				document.body.style.color = '#FFF';
-				document.body.style.backgroundColor = '#000';
-				btn.innerHTML = 'Light Mode';
+			var element = document.body;
+			element.classList.toggle("dark-mode");
+			if(document.getElementById('navBar').className == "navbar navbar-light bg-light border-bottom"){
+				sessionStorage.setItem("dmode", "true");
+				document.getElementById('navBar').className = "navbar navbar-dark bg-dark border-bottom border-dark";
+				document.getElementById('name').style.backgroundColor = "#2a2a36";
+				document.getElementById('name').style.borderColor = "#2a2a36";
+				document.getElementById('name').style.color = "#fff";
+				document.getElementById('region').style.color = "#fff";
+				document.getElementById('region').style.backgroundColor = "#2a2a36";
+				document.getElementById('region').style.borderColor = "#2a2a36";
+				document.getElementById('region').style.backgroundImage = "url('https://image.pngaaa.com/298/92298-small.png')";
+				document.getElementById('mode').className = "btn btn-dark";
+				document.getElementById('mode').color = "#fff";
+				document.getElementById('moon').src = "https://www.apkmirror.com/wp-content/uploads/2020/03/5e7a6f1ddfe4b.png";
+				var i=0;
+				while(document.getElementsByClassName('card')[i]){
+					document.getElementsByClassName('card')[i].className = "card text-white bg-dark";			
+					i++;
+				}
+				document.getElementsByClassName('form-control border')[0].className = "form-control";
+				document.getElementsByClassName('form-control border')[0].className = "form-control";	
 			}else{
-				document.body.style.color = '#000';
-				document.body.style.backgroundColor = '#FFF';
-				btn.innerHTML = 'Dark Mode';
+				sessionStorage.setItem("dmode", "false");
+				document.getElementById('navBar').className = "navbar navbar-light bg-light border-bottom";
+				document.getElementById('name').style.backgroundColor = "#fff";
+				document.getElementById('name').style.borderColor = "#fff";
+				document.getElementById('name').style.color = "#000";
+				document.getElementById('region').style.color = "#000";
+				document.getElementById('region').style.backgroundColor = "#fff";
+				document.getElementById('region').style.borderColor = "#fff";
+				document.getElementById('region').style.backgroundImage = "url('https://cdn1.iconfinder.com/data/icons/ios-11-ui-elements-vol-1/29/25_dropdown_menu_down_arrow-512.png')";
+				document.getElementById('mode').className = "btn btn-light";
+				document.getElementById('mode').color = "#000";
+				document.getElementById('moon').src = "/images/moon.png";
+				var t=document.getElementsByClassName('card text-white bg-dark').length;
+				for(var i=0;i<t;i++){
+					document.getElementsByClassName('card text-white bg-dark')[0].className = "card";
+				}
+				document.getElementsByClassName('form-control')[0].className = "form-control border";
+				document.getElementsByClassName('form-control')[1].className = "form-control border";	
+			}
+		}
 
+		function checkmode(){
+			if(sessionStorage.getItem("dmode")=="true"){
+				var element = document.body;
+				element.classList.toggle("dark-mode");
+				sessionStorage.setItem("dmode", "true");
+				document.getElementById('navBar').className = "navbar navbar-dark bg-dark border-bottom border-dark";
+				document.getElementById('name').style.backgroundColor = "#2a2a36";
+				document.getElementById('name').style.borderColor = "#2a2a36";
+				document.getElementById('name').style.color = "#fff";
+				document.getElementById('region').style.color = "#fff";
+				document.getElementById('region').style.backgroundColor = "#2a2a36";
+				document.getElementById('region').style.borderColor = "#2a2a36";
+				document.getElementById('region').style.backgroundImage = "url('https://image.pngaaa.com/298/92298-small.png')";
+				document.getElementById('mode').className = "btn btn-dark";
+				document.getElementById('mode').color = "#fff";
+				document.getElementById('moon').src = "https://www.apkmirror.com/wp-content/uploads/2020/03/5e7a6f1ddfe4b.png";
+				var i=0;
+				while(document.getElementsByClassName('card')[i]){
+					document.getElementsByClassName('card')[i].className = "card text-white bg-dark";			
+					i++;
+				}
+				document.getElementsByClassName('form-control border')[0].className = "form-control";
+				document.getElementsByClassName('form-control border')[0].className = "form-control";	
 			}
 		}
 	</script>
 
 </head>
-<body id="body">
-	<nav class="navbar navbar-light bg-light border-bottom" style=" background-color: #ffffff;">
+<body onload="checkmode()">
+	<nav class="navbar navbar-light bg-light border-bottom" id="navBar">
 	  <span class="navbar-brand mb-0 h1" style="font-weight: bold;">Where in the world?</span>
-	  <span><button onclick="cmode()" id="mode" class="btn btn-light"><img src="/images/moon.png" alt="" style="width: 15px;"> Dark Mode</button></span>
+	  <span><button onclick="cmode()" class="btn btn-light" id="mode"><img src="/images/moon.png" alt="" style="width: 15px;" id="moon">	Dark Mode</button></span>
 	</nav>
 	<div class="container-fluid">
 		<%if(typeof error != 'undefined'){%>
 			<p><%=error%></p>
 			<p>Back to <a href="/">Home Page</a></p>
 		<%}else{%>
-			<form style="display: block; margin: 20px;">
-			  	<div class="form-group" style="display: inline; width: 30%; position: absolute; left: 80px;">
-			    	<input type="text" class="form-control" id="name" placeholder="Search for a country..." onblur="search()">
-			  	</div>
-			  	<div class="form-group" style="display: inline; width: 13%; position: absolute; right: 80px;">
-			    	<select class="form-control" id="region" name="region" onchange="filter()">
-			      		<option value="" disabled selected hidden>Filter by Region</option>
-					  	<option value="none">No Filter</option>
-					  	<option value="Africa">Africa</option>
-					  	<option value="Americas">America</option>
-					  	<option value="Asia">Asia</option>
-					  	<option value="Europe">Europe</option>
-					  	<option value="Oceania">Oceania</option>
-			    	</select>
-			  	</div>
+			<form style="display: block; margin-left: 65px; margin-right: 65px;margin-top: 20px;margin-bottom: 0px;">
+				<div class="row">
+				  	<div class="form-group col-12 col-md-5">
+				    	<input type="text" class="form-control border" id="name" placeholder="Search for a country..." onblur="search()">
+				  	</div>
+				  	<div class="form-group col-12 col-md-4"></div>
+				  	<div class="form-group col-12 col-md-3" style="float: right;">
+				    	<select class="form-control border" id="region" name="region" onchange="filter()">
+				      		<option value="" disabled selected hidden>Filter by Region</option>
+						  	<option value="none">No Filter</option>
+						  	<option value="Africa">Africa</option>
+						  	<option value="Americas">America</option>
+						  	<option value="Asia">Asia</option>
+						  	<option value="Europe">Europe</option>
+						  	<option value="Oceania">Oceania</option>
+				    	</select>
+				  	</div>
+				</div>
 			</form>
 			<div class="row">
 				<div class="card-deck" style="margin: 50px;">
 					<% var i=0;%>
 					<%while(data[i]){%>
 		  				<div class="col-sm-6 col-md-3" style="margin-bottom: 60px;">
-						  	<a style="text-decoration: none;" href="/display/?name=<%=data[i]['name']%>">
+						  	<a style="text-decoration: none;color: black;" href="/display/?name=<%=data[i]['name']%>">
 						  		<div class="card">
 							    <img src="<%=data[i]['flag']%>" class="card-img-top" alt="flag">
 							    <div class="card-body">

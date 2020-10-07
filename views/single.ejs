@@ -13,19 +13,76 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<script type="text/javascript">
+		function cmode(){
+			var element = document.body;
+			element.classList.toggle("dark-mode");
+			if(document.getElementById('navBar').className == "navbar navbar-light bg-light border-bottom"){
+				sessionStorage.setItem("dmode", "true");
+				document.getElementById('navBar').className = "navbar navbar-dark bg-dark border-bottom border-dark";
+				while(document.getElementsByClassName('btn btn-light')[0]){
+					document.getElementsByClassName('btn btn-light')[0].style.color = "#fff";
+					document.getElementsByClassName('btn btn-light')[0].style.borderColor = "black";
+					document.getElementsByClassName('btn btn-light')[0].className = "btn btn-dark";
+				}
+				document.getElementById('moon').src = "https://www.apkmirror.com/wp-content/uploads/2020/03/5e7a6f1ddfe4b.png";
+				var i=0;
+				while(document.getElementsByClassName('card')[i]){
+					document.getElementsByClassName('card')[i].className = "card text-white bg-dark";			
+					i++;
+				}	
+				document.getElementById('back').style.color = "white";
+			}else{
+				sessionStorage.setItem("dmode", "false");
+				document.getElementById('navBar').className = "navbar navbar-light bg-light border-bottom";
+				while(document.getElementsByClassName('btn btn-dark')[0]){
+					document.getElementsByClassName('btn btn-dark')[0].style.color = "#000";
+					document.getElementsByClassName('btn btn-dark')[0].style.borderColor = "black";
+					document.getElementsByClassName('btn btn-dark')[0].className = "btn btn-light";
+				}
+				document.getElementById('mode').style.borderColor = "white";
+				document.getElementById('moon').src = "/images/moon.png";
+				var t=document.getElementsByClassName('card text-white bg-dark').length;
+				for(var i=0;i<t;i++){
+					document.getElementsByClassName('card text-white bg-dark')[0].className = "card";
+				}
+				document.getElementById('back').style.color = "black";	
+			}
+		}
+		function checkmode(){
+			if(sessionStorage.getItem("dmode")=="true"){
+				var element = document.body;
+				element.classList.toggle("dark-mode");
+				sessionStorage.setItem("dmode", "true");
+				document.getElementById('navBar').className = "navbar navbar-dark bg-dark border-bottom border-dark";
+				while(document.getElementsByClassName('btn btn-light')[0]){
+					document.getElementsByClassName('btn btn-light')[0].style.color = "#fff";
+					document.getElementsByClassName('btn btn-light')[0].style.borderColor = "black";
+					document.getElementsByClassName('btn btn-light')[0].className = "btn btn-dark";
+				}
+				document.getElementById('back').style.color = "white";
+				document.getElementById('moon').src = "https://www.apkmirror.com/wp-content/uploads/2020/03/5e7a6f1ddfe4b.png";
+				var i=0;
+				while(document.getElementsByClassName('card')[i]){
+					document.getElementsByClassName('card')[i].className = "card text-white bg-dark";			
+					i++;
+				}	
+			}
+		}
+	</script>
 
 </head>
-<body>
-	<nav class="navbar navbar-light bg-light border-bottom" style=" background-color: #ffffff;">
+<body onload="checkmode()">
+	<nav class="navbar navbar-light bg-light border-bottom" style=" background-color: #ffffff;" id="navBar">
 	  <span class="navbar-brand mb-0 h1" style="font-weight: bold;">Where in the world?</span>
-	  <span><button onclick="cmode()" id="mode" class="btn btn-light"><img src="/images/moon.png" alt="" style="width: 15px;"> Dark Mode</button></span>
+	  <span><button onclick="cmode()" class="btn btn-light" id="mode"><img src="/images/moon.png" alt="" style="width: 15px;" id="moon"> Dark Mode</button></span>
 	</nav>
 	<div class="container-fluid">
 		<%if(typeof error != 'undefined'){%>
 			<p><%=error%></p>
 			<p>Back to <a href="/">Home Page</a></p>
 		<%}else{%>
-			<a href="/" style="display: block; "><button class="btn btn-light" style="border: 1px solid black;margin: 20px;margin-left: 0px;"> ← Back </button></a>
+			<button class="btn btn-light" style="border: 1px solid black;margin: 20px;margin-left: 0px;"><a href="/" id="back" style="display: block; color: black;text-decoration: none;"> ← Back </a></button>
 			<%console.log(data);%>
 			<div class="row">
 				<img class="col-sm-12 col-md-6" style="max-width: 570px; display: inline;" src="<%=data['flag']%>" alt="flag">
