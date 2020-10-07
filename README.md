@@ -7,4 +7,4 @@ User can also type full/partial name in the search bar.
 It uses NodeJS for back-end.   
 For this [Rest Countries Api](https://restcountries.eu/) has been used.   
 Challenge by [Frontend Mentor](https://www.frontendmentor.io?ref=challenge).  
-[Heroku link](https://rest-country-api-kushaan.herokuapp.com/).
+[Heroku link](https://rest-countries-api-kushaan.herokuapp.com/).
