@@ -13,8 +13,22 @@ a{
 }
 body{
 	background-color: #f6f6f6;
-}/*
-nav span{
-	margin-left: 40px;
-	margin-right: 40px;
-}*/
+}
+nav {
+	background-color: #ffffff;
+}
+.dark-mode {
+  background-color: #1a1b23;;
+  color: white;
+}
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+	background: 96% / 15% no-repeat;
+	background-image: url('https://cdn1.iconfinder.com/data/icons/ios-11-ui-elements-vol-1/29/25_dropdown_menu_down_arrow-512.png');
+}
+.card-dark{
+	background-color: #2a2a36;
+	color: #ffffff;
+}
